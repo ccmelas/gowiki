@@ -1,0 +1,16 @@
+{{ template "header" }}
+    <section class="wiki-edit">
+        <h1 class="section-title">{{ .Title }}</h1>
+
+        <form class="wiki-form" action="/save/{{ .Title }}" method="POST">
+            <div class="form-group">
+                <label for="editor">Wiki Content</label>
+                <textarea name="body" class="editor" id="editor" rows="20" cols="80">{{ printf "%s" .Body }}</textarea>
+            </div>
+            <div>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </section>
+
+{{ template "footer" }}

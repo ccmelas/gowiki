@@ -1,0 +1,20 @@
+{{ template "header" }}
+    <section class="wikis">
+        <h4 class="section-title">Available Wikis</h4>
+        <div class="section-content">
+            {{ if len . | eq 0 }}
+                <div class="no-wikis">
+                    <h4>There are no wikis yet</h4>
+                    <a href="/create">Create New Wiki</a>
+                </div>
+            {{ else }}
+                <ul class="wikis-list">
+                    {{ range . }}
+                        <li><a href="/view/{{ .Title }}">{{ .Title }}</a></li>
+                    {{ end }}
+                </ul>
+            {{ end }}
+        </div>
+    </section>
+
+{{ template "footer" }}

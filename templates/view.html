@@ -1,0 +1,11 @@
+{{ template "header" }}
+    <article class="wiki">
+        <div class="section-title">
+            <h4>{{ .Title }}</h4>
+            <p>[<a href="/edit/{{ .Title }}">Edit</a>]</p>
+        </div>
+        <div class="section-content">
+            {{ printf "%s" .Body }}
+        </div>
+    </article>
+{{ template "footer" }}

@@ -1,0 +1,16 @@
+{{ template "header" }}
+
+<h1>Create Wiki</h1>
+<form action="/save" method="POST">
+    <div>
+        <input name="title" placeholder="Enter Wiki Title">
+    </div>
+    <div>
+        <textarea name="body" rows="20" cols="80" placeholder="Start writing..."></textarea>
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>
+
+{{ template "footer" }}

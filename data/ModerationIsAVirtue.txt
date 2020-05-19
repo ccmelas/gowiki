@@ -1,0 +1,9 @@
+Go is a simple language, only 25 keywords. In some ways this makes the features that are built into the language stand out. Equally these are the features that the language sells itself on, lightweight concurrency, structural typing.
+
+I think all of us have experienced the confusion that comes from trying to use all of Go’s features at once. Who was so excited to use channels that they used them as much as they could, as often as they could? Personally for me I found the result was hard to test, fragile, and ultimately overcomplicated. Am I alone?
+
+I had the same experience with goroutines, attempting to break the work into tiny units I created a hard to manage hurd of Goroutines and ultimately missed the observation that most of my goroutines were always blocked waiting for their predecessor– the code was ultimately sequential and I had added a lot of complexity for little real world benefit. Who has experienced something like this?
+
+I had the same experience with embedding. Initially I mistook it for inheritance. Then later I recreated the fragile base class problem by composing complicated types, which already had several responsibilities, into more complicated mega types.
+
+This is potentially the least actionable piece of advice, but one I think is important enough to mention. The advice is always the same, all things in moderation, and Go’s features are no exception. If you can, don’t reach for a goroutine, or a channel, or embed a struct, anonymous functions, going overboard with packages, interfaces for everything, instead prefer simpler approach rather than the clever approach.

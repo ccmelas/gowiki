@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nunito Sans", sans-serif;
+}
+header {
+    height: 250px;
+    background: #63cdb5;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header a {
+    text-decoration: none;
+    color: #FFF;
+}
+
+header a:hover {
+    text-decoration: none;
+}
+
+.content {
+    padding: 56px;
+    min-height: calc(100vh - 250px);
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.section-title {
+    font-size: 20px;
+    color: #1f1f1f;
+    margin: 0 0 20px;
+}
+
+section.wikis {
+    width: 60%;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px 0 #dfe5ee;
+    background-color: #fff;
+    padding: 40px 48px;
+}
+
+.wikis-list li {
+    list-style: none;
+    margin-bottom: 18px;
+}
+
+.wikis-list a {
+    text-decoration: none;
+    outline: 0;
+    font-size: 16px;
+    color: #777;
+    font-family: system-ui,-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    transition: .2s ease-in-out;
+}
+
+.wikis-list a:hover {
+    color: #1f1f1f;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+}
+
+.form-group textarea {
+    display: block;
+}
+
+.editor {
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #777;
+}
+
+button {
+    display: inline-block;
+    padding: 8px 14px;
+    text-transform: uppercase;
+    line-height: 1.43;
+    letter-spacing: 1.25px;
+    background-color: #63cdb5;
+    color: #FFF;
+    border-radius: 4px;
+    border: 1px solid #63cdb5;
+    transition: .2s all ease-in-out;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #63cdb5;
+    background: #FFF;
+}
