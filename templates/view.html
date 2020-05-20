@@ -2,7 +2,10 @@
     <article class="wiki">
         <div class="section-title">
             <h4>{{ .Title }}</h4>
-            <p>[<a href="/edit/{{ .Title }}">Edit</a>]</p>
+            <p>
+                [<a href="/edit/{{ .Title }}">Edit</a>]
+                [<a href="/delete/{{ .Title }}" onclick="return confirm('Are you sure?')">Delete</a>]
+            </p>
         </div>
         <div class="section-content">
             {{ printf "%s" .Body }}

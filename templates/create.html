@@ -1,16 +1,19 @@
 {{ template "header" }}
+<section class="wiki-edit">
+    <h1 class="section-title">Create Wiki</h1>
 
-<h1>Create Wiki</h1>
-<form action="/save" method="POST">
-    <div>
-        <input name="title" placeholder="Enter Wiki Title">
-    </div>
-    <div>
-        <textarea name="body" rows="20" cols="80" placeholder="Start writing..."></textarea>
-    </div>
-    <div>
-        <button type="submit">Save</button>
-    </div>
-</form>
-
+    <form class="wiki-form" action="/store" method="POST">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input name="title" class="editor" id="title" />
+        </div>
+        <div class="form-group">
+            <label for="editor">Content</label>
+            <textarea name="body" class="editor" id="editor" rows="20" cols="80" placeholder="Start writing..."></textarea>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</section>
 {{ template "footer" }}

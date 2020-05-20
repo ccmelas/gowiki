@@ -2,10 +2,10 @@
     <section class="wikis">
         <h4 class="section-title">Available Wikis</h4>
         <div class="section-content">
-            {{ if len . | eq 0 }}
+            {{ if eq (len .) 0 }}
                 <div class="no-wikis">
                     <h4>There are no wikis yet</h4>
-                    <a href="/create">Create New Wiki</a>
+                    <a class="btn" href="/create">Create New Wiki</a>
                 </div>
             {{ else }}
                 <ul class="wikis-list">
