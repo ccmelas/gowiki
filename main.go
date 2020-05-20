@@ -6,22 +6,30 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 )
 
 var templates = template.Must(template.ParseGlob("templates/*.html"))
-var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
+var validPath = regexp.MustCompile("^/(edit|save|view|delete)/([a-zA-Z0-9 ]+)$")
 
 type Page struct {
 	Title string
 	Body []byte
 }
 
+func (p *Page) getPath() string {
+	return "data/" + p.Title + ".txt"
+}
+
 func (p *Page) save() error {
-	filename := p.Title + ".txt"
-	return ioutil.WriteFile(filename, p.Body, 0600)
+	return ioutil.WriteFile(p.getPath(), p.Body, 0600)
+}
+
+func (p *Page) delete() error {
+	return os.Remove(p.getPath())
 }
 
 
@@ -68,13 +76,20 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 	for _, wiki := range wikis {
-		content,_ := ioutil.ReadFile(wiki.Name())
 		filename := wiki.Name()
+		if filename == ".gitkeep" {
+			continue
+		}
+		content,_ := ioutil.ReadFile(filename)
 		page := Page{ Title: strings.TrimSuffix(filename, filepath.Ext(filename)), Body: content }
 		pages = append(pages, &page)
 	}
 
 	renderTemplate(w, "index", pages)
+}
+
+func createHandler(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "create", nil)
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -104,12 +119,41 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 	http.Redirect(w, r, "/view/" + title, http.StatusFound)
 }
 
+func storeHandler(w http.ResponseWriter, r *http.Request) {
+	body := r.FormValue("body")
+	title := r.FormValue("title")
+	p := &Page{ Title: title, Body: []byte(body) }
+	err := p.save()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	http.Redirect(w, r, "/view/" + title, http.StatusFound)
+}
+
+func deleteHandler(w http.ResponseWriter, r *http.Request, title string) {
+	p, err := loadPage(title)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError);
+		return
+	}
+	err = p.delete();
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError);
+		return
+	}
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
 func main() {
 	fs := http.FileServer(http.Dir("./public"))
 	http.Handle("/public/", http.StripPrefix("/public/", fs));
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/create", createHandler)
+	http.HandleFunc("/store", storeHandler)
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
+	http.HandleFunc("/delete/", makeHandler(deleteHandler))
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
